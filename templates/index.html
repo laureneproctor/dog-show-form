@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>Dog Show Voting</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 900px; margin: 20px auto; background-color:#c5c8ed; }
+        h1, h2 { text-align: center; }
+        .group-block { margin-bottom: 20px; }
+        label { font-weight: bold; display: block; margin-bottom: 5px; }
+        select { width: 100%; padding: 6px; }
+        button { padding: 10px 20px; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Dog Show Voting Form</h1>
+    <p>Select one breed for each group, then choose your overall “Best in Show”.</p>
+
+    <form method="POST">
+        <div class="group-block">
+            <label for="person_name">Your Name</label>
+            <input type="text" id="person_name" name="person_name" placeholder="Enter your name" required>
+        </div>
+        {% for key, group_name in group_keys %}
+            <div class="group-block">
+                <label for="{{ key }}">{{ group_name }} Group</label>
+                <select name="{{ key }}" id="{{ key }}" required>
+                    <option value="">-- Choose a breed --</option>
+                    {% for breed in breeds_by_group[group_name] %}
+                        <option value="{{ breed }}">{{ breed }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endfor %}
+
+        <h2>Best in Show</h2>
+        <div class="group-block">
+            <label for="best_in_show">Best in Show (overall)</label>
+            <select name="best_in_show" id="best_in_show" required>
+                <option value="">-- Choose a breed --</option>
+                {% for breed in all_breeds %}
+                    <option value="{{ breed }}">{{ breed }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <button type="submit">Submit Vote</button>
+        <p><a href="{{ url_for('results') }}">View current results</a></p>
+
+    </form>
+</body>
+</html>

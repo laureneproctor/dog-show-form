@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <title>All Responses</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1000px; margin: 20px auto; background-color: #f0f1f7;}
+        h1 { text-align: center; }
+        table { border-collapse: collapse; width: 100%; margin-top: 20px; }
+        th, td {
+            border: 1px solid black;
+            padding: 6px 10px;
+            text-align: left;
+            font-size: 14px;
+        }
+        th { background-color: #c5c8ed; }
+        a { display: inline-block; margin-top: 15px; }
+    </style>
+</head>
+<body>
+    <h1>Dog Show Votes</h1>
+
+    {% if columns %}
+        <table>
+            <thead>
+                <tr>
+                    {% for col in columns %}
+                        <th>{{ col }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in rows %}
+                    <tr>
+                        {% for col in columns %}
+                            <td>{{ row[col] }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No responses yet.</p>
+    {% endif %}
+
+    <a href="{{ url_for('index') }}">Back to voting form</a>
+</body>
+</html>
